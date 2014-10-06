@@ -55,8 +55,8 @@ public class DisplayArticleActivity extends BaseActivity {
 		//use web view to display article is simple.
 		//but need consider the select word issue.
 		//later need figure out a solution.
-		final WebSettings webSettings = _webView.getSettings();
-		webSettings.setDefaultFixedFontSize(20);
+		//final WebSettings webSettings = _webView.getSettings();
+		//webSettings.setDefaultFixedFontSize(20);
 		
 		if(_articleHtmlFmt == null) {
 			_articleHtmlFmt = _assetUtil.ReadFromfile("article.html", getApplicationContext());

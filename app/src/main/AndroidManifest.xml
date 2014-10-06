@@ -24,7 +24,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.xzheng.znews.DisplayArticleActivity"
+            android:name=".DisplayArticleActivity"
             android:label="@string/title_activity_display_article"
             android:theme="@style/AppTheme">
         </activity>
