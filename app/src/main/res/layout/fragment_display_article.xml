@@ -6,14 +6,11 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".MainActivity" >
+    tools:context="com.xzheng.app.xnewsreader.DisplayArticleActivity$PlaceholderFragment" >
 
-    <com.handmark.pulltorefresh.library.PullToRefreshListView
-        android:id="@+id/pull_refresh_list"
-        android:layout_width="match_parent"
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="12dp"
-        android:scrollbarStyle="outsideOverlay" />
-    
-        
+        android:text="@string/hello_world" />
+
 </RelativeLayout>

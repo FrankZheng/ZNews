@@ -3,6 +3,7 @@
     package="com.xzheng.znews" >
 
     <application
+        android:name="com.xzheng.znews.MainApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
