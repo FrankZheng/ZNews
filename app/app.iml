@@ -88,7 +88,7 @@
     <orderEntry type="library" exported="" name="dagger-compiler-1.2.2" level="project" />
     <orderEntry type="library" exported="" name="universal-image-loader-1.9.3" level="project" />
     <orderEntry type="library" exported="" name="javawriter-2.5.0" level="project" />
-    <orderEntry type="module" module-name="android-pulltorefresh" exported="" />
+    <orderEntry type="module" module-name="pulltorefresh" exported="" />
   </component>
 </module>
 
