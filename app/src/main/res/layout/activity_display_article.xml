@@ -1,0 +1,30 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.xzheng.app.xnewsreader.DisplayArticleActivity"
+    tools:ignore="MergeRootFrame">
+    
+    <!-- 
+    <TextView android:id="@+id/textview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="6dip" 
+        android:textSize="20sp" 
+        android:scrollbars="vertical"
+        android:maxLines="256"
+        android:ellipsize="marquee" 
+    	android:marqueeRepeatLimit="marquee_forever"/>
+    -->
+    <WebView 
+        android:id="@+id/webview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="20dip"
+        android:paddingRight="20dip"
+        android:scrollbars="vertical"
+        android:scrollbarStyle="outsideOverlay"
+        />
+    
+</FrameLayout>
