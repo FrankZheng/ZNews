@@ -5,6 +5,7 @@ import org.robolectric.AndroidManifest;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 import org.robolectric.res.Fs;
+import org.robolectric.res.FsFile;
 
 /**
  * Created by xzheng on 10/5/14.
@@ -24,6 +25,11 @@ public class RobolectricGradleTestRunner extends RobolectricTestRunner {
             @Override
             public int getTargetSdkVersion() {
                 return MAX_SDK_SUPPORTED_BY_ROBOLECTRIC;
+            }
+            @Override
+            protected AndroidManifest createLibraryAndroidManifest(FsFile libraryBaseDir) {
+                FsFile mainDir = libraryBaseDir.join("src/main");
+                return new AndroidManifest(mainDir.join("AndroidManifest.xml"), mainDir.join("res"));
             }
         };
     }
