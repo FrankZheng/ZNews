@@ -25,5 +25,6 @@ dependencies {
     compile 'com.squareup.dagger:dagger:1.2.2'
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.3'
     compile 'com.j256.ormlite:ormlite-android:4.48'
+    compile 'com.squareup.okhttp:okhttp:2.0.0'
     compile project(':pulltorefresh')
 }

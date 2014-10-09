@@ -9,6 +9,10 @@ import java.net.URL;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
+
 public class UrlFetcher extends AsyncTask<URL, Integer, String>{
 	
 	protected static final String LOG_TAG = "UrlFetcher"; 
@@ -23,6 +27,7 @@ public class UrlFetcher extends AsyncTask<URL, Integer, String>{
 	@Override
 	protected String doInBackground(URL... urls) {
 		try{
+            /*
 			URL url = urls[0];
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setReadTimeout(10000);
@@ -40,6 +45,14 @@ public class UrlFetcher extends AsyncTask<URL, Integer, String>{
 				webPage += data + "\n";
 			}
 			return webPage;
+			*/
+            URL url = urls[0];
+            OkHttpClient client = new OkHttpClient();
+            Request request = new Request.Builder().url(url).build();
+
+            Response response = client.newCall(request).execute();
+            return response.body().string();
+
 		} catch(Exception e) {
 			Log.e(LOG_TAG, "Failed to fetch url " + e.toString());
 			

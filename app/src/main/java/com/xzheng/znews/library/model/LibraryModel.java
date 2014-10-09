@@ -105,7 +105,7 @@ public class LibraryModel {
 	
 	public void update() {
 		//get article list from server.
-		Log.i(LOG_TAG, "upate");
+		Log.i(LOG_TAG, "update");
 		
 		final String urlString = "http://xnewsreader.herokuapp.com/articles?limit=20&topic=t&output=json";
 		
