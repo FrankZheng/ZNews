@@ -5,6 +5,7 @@ import android.content.Context;
 import com.xzheng.znews.adapter.ArticleListAdapter;
 import com.xzheng.znews.library.model.LibraryModel;
 import com.xzheng.znews.model.Article;
+import com.xzheng.znews.service.ContentService;
 
 import dagger.Module;
 import dagger.Provides;
@@ -19,6 +20,7 @@ import dagger.Provides;
 				ArticleListAdapter.class,
 				LibraryModel.class,
 				Article.class,
+                ContentService.class
 		}
 )
 public class ApplicationModule {
