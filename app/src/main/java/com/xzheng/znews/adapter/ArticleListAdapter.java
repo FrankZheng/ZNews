@@ -32,7 +32,7 @@ public class ArticleListAdapter extends ArrayAdapter<Article>{
 	private List<Article> articles;
 	
 	
-	private Signal.Handler<Boolean> updateDoneSignal = new Signal.Handler<Boolean>() {
+	private Signal.Handler<Boolean> updateDoneHandler = new Signal.Handler<Boolean>() {
 
 		@Override
 		public void onDispatch(Boolean changed) {
@@ -54,7 +54,7 @@ public class ArticleListAdapter extends ArrayAdapter<Article>{
 		this.context = context;
 		this.articles = values;
 		
-		libraryModel.getUpdateDoneSignal().add(updateDoneSignal);
+		libraryModel.getUpdateDoneSignal().add(updateDoneHandler);
 	}
 
 	@Override

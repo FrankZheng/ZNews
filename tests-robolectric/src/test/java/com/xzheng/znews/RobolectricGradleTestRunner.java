@@ -17,6 +17,14 @@ public class RobolectricGradleTestRunner extends RobolectricTestRunner {
         super(testClass);
     }
 
+    /*
+        gradle put source files under src/main/java, which is different with ADT.
+        So robolectric could NOT load the library res / manifest correctly.
+        Here we put the project.properties under :app/src/main, with is at the same level with res folder.
+        So that robolectric could load the library properties file correctly.
+        And also do following things to make it load the library res / mainifest files correctly.
+        An better way to override the findLibraries() to load the project.properties in this module.
+     */
     @Override
     protected AndroidManifest getAppManifest(Config config) {
         String manifestProperty = "../app/src/main/AndroidManifest.xml";
