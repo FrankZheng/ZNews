@@ -3,12 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ZNews.iml" filepath="$PROJECT_DIR$/ZNews.iml" />
-      <module fileurl="file://$PROJECT_DIR$/ZNews.iml" filepath="$PROJECT_DIR$/ZNews.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/pulltorefresh/pulltorefresh.iml" filepath="$PROJECT_DIR$/pulltorefresh/pulltorefresh.iml" />
-      <module fileurl="file://$PROJECT_DIR$/pulltorefresh/pulltorefresh.iml" filepath="$PROJECT_DIR$/pulltorefresh/pulltorefresh.iml" />
-      <module fileurl="file://$PROJECT_DIR$/tests-robolectric/tests-robolectric.iml" filepath="$PROJECT_DIR$/tests-robolectric/tests-robolectric.iml" />
       <module fileurl="file://$PROJECT_DIR$/tests-robolectric/tests-robolectric.iml" filepath="$PROJECT_DIR$/tests-robolectric/tests-robolectric.iml" />
     </modules>
   </component>

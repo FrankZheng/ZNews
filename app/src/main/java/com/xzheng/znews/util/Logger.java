@@ -36,7 +36,7 @@ public class Logger {
     }
 
     protected String createFormattedString(String format, Object... args) {
-        String formattedString = null;
+        String formattedString;
         try {
             formattedString = String.format(format, args);
         } catch(Exception e) {
