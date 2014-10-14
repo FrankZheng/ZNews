@@ -1,7 +1,5 @@
 package com.xzheng.znews.library.model;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,20 +12,16 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONTokener;
-
-import android.util.Log;
+import android.os.AsyncTask;
 import android.widget.Toast;
 
 import com.xzheng.znews.MainApplication;
+import com.xzheng.znews.configuration.Topic;
 import com.xzheng.znews.model.Article;
+import com.xzheng.znews.service.ContentService;
 import com.xzheng.znews.signal.SignalFactory;
 import com.xzheng.znews.signal.SignalFactory.SignalImpl;
 import com.xzheng.znews.util.Logger;
-import com.xzheng.znews.util.UrlFetcher;
-import com.xzheng.znews.util.UrlFetcherHandler;
 
 
 @Singleton
@@ -45,6 +39,9 @@ public class LibraryModel {
 		
 		_updateDoneSignal = signalFactory.createSignal();
 	}
+
+    @Inject
+    ContentService _contentService;
 	
 	private final Comparator<Article> _articleComparator = new Comparator<Article>() {
 
@@ -108,61 +105,45 @@ public class LibraryModel {
 		//get article list from server.
 		_logger.i("update");
 		
-		final String urlString = "http://xnewsreader.herokuapp.com/articles?limit=20&topic=t&output=json";
-		
-		try {
-			URL url = new URL(urlString);
-			new UrlFetcher(_handler).execute(url);
-		} catch (MalformedURLException e) {
-			_logger.e(e);
-		}
+		_getArticlesTask.execute();
 	}
-	
-	private UrlFetcherHandler _handler = new UrlFetcherHandler() {
 
-		@Override
-		public void onResult(Object result) {
-			_logger.i("on articles back");
-			String data = (String) result;
-			Object object;
-			
-			if(data == null) {
-				_logger.e("return null data");
-				_updateDoneSignal.dispatch(false);
-				return;
-			}
-			
-			try {
-				object = new JSONTokener(data).nextValue();
-				if(object instanceof JSONArray) {
-					JSONArray jsonArray = (JSONArray)object;
-					int added = 0;
-					for (int i = 0, length = jsonArray.length(); i < length; i++) {
-						Article article = new Article(jsonArray.getJSONObject(i));
-						if(!_articleMap.containsKey(article.getId())) {
-							_articleMap.put(article.getId(), article);
-							//persist to db
-							article.persist();
-							added++;
-						}
-					}
-					//show messages
-					String message = added > 0 ? String.format("Has %d new articles", added) : "No new articles";
-					Toast.makeText(MainApplication.getContext(), message, Toast.LENGTH_SHORT).show();
-					
-					//update signal
-					_updateDoneSignal.dispatch(added > 0);
-					
-				}
-				
-			} catch (JSONException e) {
-				_logger.e(e);
-				
-			} catch (SQLException e) {
-				_logger.e(e);
-				
-			}
-		}
-	};
+    //Create a async task to get articles
+    private AsyncTask<Void, Integer, List<Article>> _getArticlesTask = new AsyncTask<Void, Integer, List<Article>>() {
+        @Override
+        protected List<Article> doInBackground(Void... args) {
+            List<Article> articles = _contentService.getArticles(Topic.Tech, 20);
+            return articles;
+        }
+
+        @Override
+        protected  void onPostExecute(List<Article> result) {
+            int added = 0;
+            if(result != null) {
+                for (int i = 0; i < result.size(); i++) {
+                    Article article = result.get(i);
+                    if (!_articleMap.containsKey(article.getId())) {
+                        _articleMap.put(article.getId(), article);
+                        //persist to db
+                        try {
+                            article.persist();
+                        } catch (SQLException e) {
+                            _logger.e(e, "Failed to save article into db");
+                            e.printStackTrace();
+                        }
+                        added++;
+                    }
+                }
+            }
+
+            String message = added > 0 ? String.format("Has %d new articles", added) : "No new articles";
+            Toast.makeText(MainApplication.getContext(), message, Toast.LENGTH_SHORT).show();
+
+            //update signal
+            _updateDoneSignal.dispatch(added > 0);
+        }
+    };
+
+
 	
 }

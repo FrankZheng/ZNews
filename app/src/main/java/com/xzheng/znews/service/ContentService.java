@@ -1,8 +1,12 @@
 package com.xzheng.znews.service;
 
 
+import android.net.Uri;
+
 import com.google.common.base.Strings;
 import com.xzheng.znews.MainApplication;
+import com.xzheng.znews.configuration.Configuration;
+import com.xzheng.znews.configuration.Topic;
 import com.xzheng.znews.model.Article;
 import com.xzheng.znews.util.HttpUtil;
 import com.xzheng.znews.util.Logger;
@@ -36,10 +40,20 @@ public class ContentService {
         MainApplication.getApplication().inject(this);
     }
 
-    public List<Article> getArticles(String topic, int limit) {
+    public List<Article> getArticles(Topic topic, int limit) {
         //Form the url
-        String url = String.format("%s/%s?topic=%s&limit=%s&format=%s",
-                BASE_URL, "articles", topic, limit, FMT_JSON);
+        Uri.Builder builder  = Uri.parse(BASE_URL)
+                .buildUpon()
+                .appendPath("articles")
+                .appendQueryParameter("limit", String.valueOf(limit))
+                .appendQueryParameter("format", FMT_JSON);
+
+        if(!Strings.isNullOrEmpty(topic.toString())) {
+            builder.appendQueryParameter("topic", topic.toString());
+        }
+
+
+        String url = builder.build().toString();
 
         //Fetch and parse json data from the content server
         List<Article> articles = new ArrayList<Article>();
