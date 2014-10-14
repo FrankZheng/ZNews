@@ -46,7 +46,7 @@ public class ContentService {
                 .buildUpon()
                 .appendPath("articles")
                 .appendQueryParameter("limit", String.valueOf(limit))
-                .appendQueryParameter("format", FMT_JSON);
+                .appendQueryParameter("output", FMT_JSON);
 
         if(!Strings.isNullOrEmpty(topic.toString())) {
             builder.appendQueryParameter("topic", topic.toString());

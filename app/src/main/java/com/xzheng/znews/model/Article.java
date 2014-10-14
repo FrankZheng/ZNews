@@ -29,7 +29,8 @@ public class Article implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	private static final String LOG_TAG = "Article";
-    private Logger _logger = new Logger.Builder().tag(LOG_TAG).build();
+
+    private transient Logger _logger = new Logger.Builder().tag(LOG_TAG).build();
 	
 	@Inject
 	static DatabaseHelper _databaseHelper;

@@ -104,45 +104,48 @@ public class LibraryModel {
 	public void update() {
 		//get article list from server.
 		_logger.i("update");
-		
-		_getArticlesTask.execute();
-	}
 
-    //Create a async task to get articles
-    private AsyncTask<Void, Integer, List<Article>> _getArticlesTask = new AsyncTask<Void, Integer, List<Article>>() {
-        @Override
-        protected List<Article> doInBackground(Void... args) {
-            List<Article> articles = _contentService.getArticles(Topic.Tech, 20);
-            return articles;
-        }
+        //Create a async task to get articles
 
-        @Override
-        protected  void onPostExecute(List<Article> result) {
-            int added = 0;
-            if(result != null) {
-                for (int i = 0; i < result.size(); i++) {
-                    Article article = result.get(i);
-                    if (!_articleMap.containsKey(article.getId())) {
-                        _articleMap.put(article.getId(), article);
-                        //persist to db
-                        try {
-                            article.persist();
-                        } catch (SQLException e) {
-                            _logger.e(e, "Failed to save article into db");
-                            e.printStackTrace();
-                        }
-                        added++;
-                    }
-                }
+        AsyncTask<Void, Integer, List<Article>> getArticlesTask = new AsyncTask<Void, Integer, List<Article>>() {
+            @Override
+            protected List<Article> doInBackground(Void... args) {
+                List<Article> articles = _contentService.getArticles(Topic.Tech, 20);
+                return articles;
             }
 
-            String message = added > 0 ? String.format("Has %d new articles", added) : "No new articles";
-            Toast.makeText(MainApplication.getContext(), message, Toast.LENGTH_SHORT).show();
+            @Override
+            protected  void onPostExecute(List<Article> result) {
+                int added = 0;
+                if(result != null) {
+                    for (int i = 0; i < result.size(); i++) {
+                        Article article = result.get(i);
+                        if (!_articleMap.containsKey(article.getId())) {
+                            _articleMap.put(article.getId(), article);
+                            //persist to db
+                            try {
+                                article.persist();
+                            } catch (SQLException e) {
+                                _logger.e(e, "Failed to save article into db");
+                                e.printStackTrace();
+                            }
+                            added++;
+                        }
+                    }
+                }
 
-            //update signal
-            _updateDoneSignal.dispatch(added > 0);
-        }
-    };
+                String message = added > 0 ? String.format("Has %d new articles", added) : "No new articles";
+                Toast.makeText(MainApplication.getContext(), message, Toast.LENGTH_SHORT).show();
+
+                //update signal
+                _updateDoneSignal.dispatch(added > 0);
+            }
+        };
+
+        getArticlesTask.execute();
+	}
+
+
 
 
 	
