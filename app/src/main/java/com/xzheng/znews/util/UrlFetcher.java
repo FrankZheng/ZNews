@@ -15,7 +15,9 @@ import com.squareup.okhttp.Response;
 
 public class UrlFetcher extends AsyncTask<URL, Integer, String>{
 	
-	protected static final String LOG_TAG = "UrlFetcher"; 
+	protected static final String LOG_TAG = "UrlFetcher";
+    private Logger _logger = new Logger.Builder().tag(LOG_TAG).build();
+
 	private UrlFetcherHandler handler;
 	public UrlFetcher(UrlFetcherHandler handler) {
 		this.handler = handler;
@@ -27,25 +29,7 @@ public class UrlFetcher extends AsyncTask<URL, Integer, String>{
 	@Override
 	protected String doInBackground(URL... urls) {
 		try{
-            /*
-			URL url = urls[0];
-			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-			conn.setReadTimeout(10000);
-			conn.setConnectTimeout(15000);
-			conn.setRequestMethod("GET");
-			conn.setDoInput(true);
-			conn.connect();
-			InputStream is = conn.getInputStream();
-			
-			BufferedReader reader = new BufferedReader(new InputStreamReader
-					(is, "UTF-8") );
-			String data = null;
-			String webPage = "";
-			while ((data = reader.readLine()) != null){
-				webPage += data + "\n";
-			}
-			return webPage;
-			*/
+
             URL url = urls[0];
             OkHttpClient client = new OkHttpClient();
             Request request = new Request.Builder().url(url).build();
@@ -54,11 +38,7 @@ public class UrlFetcher extends AsyncTask<URL, Integer, String>{
             return response.body().string();
 
 		} catch(Exception e) {
-			Log.e(LOG_TAG, "Failed to fetch url " + e.toString());
-			
-			//TODO: It will cause issues to make toast in background thread
-			//figure out a way to throw the exception out.
-			//Toast.makeText(context, "Failed to fetch feeds, " + e.toString(), Toast.LENGTH_SHORT).show();
+			_logger.e(e, "Failed to fetch url");
 			return null;
 		}
 	}

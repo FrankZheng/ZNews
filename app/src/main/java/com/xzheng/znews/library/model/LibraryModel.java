@@ -9,7 +9,6 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -26,17 +25,19 @@ import com.xzheng.znews.MainApplication;
 import com.xzheng.znews.model.Article;
 import com.xzheng.znews.signal.SignalFactory;
 import com.xzheng.znews.signal.SignalFactory.SignalImpl;
+import com.xzheng.znews.util.Logger;
 import com.xzheng.znews.util.UrlFetcher;
 import com.xzheng.znews.util.UrlFetcherHandler;
 
 
 @Singleton
 public class LibraryModel {
-	
-	
+    private static final String LOG_TAG = "LibraryModel";
+    private Logger _logger = new Logger.Builder().tag(LOG_TAG).build();
+
 	private Map<String, Article> _articleMap;
 	private final SignalImpl<Boolean> _updateDoneSignal;
-	private static final String LOG_TAG = "LibraryModel";
+
 	private List<Article> _articleList = new ArrayList<Article>();
 	
 	@Inject
@@ -91,9 +92,9 @@ public class LibraryModel {
 					_articleMap.put(article.getId(), article);
 				}
 			} catch (SQLException e) {
-				Log.e(LOG_TAG, "failed to load articles from db " + e.toString());
+				_logger.e(e, "failed to load articles from db");
 				//print stack trace may give more info to help debug issue
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 		}
 		return _articleMap;
@@ -105,7 +106,7 @@ public class LibraryModel {
 	
 	public void update() {
 		//get article list from server.
-		Log.i(LOG_TAG, "update");
+		_logger.i("update");
 		
 		final String urlString = "http://xnewsreader.herokuapp.com/articles?limit=20&topic=t&output=json";
 		
@@ -113,7 +114,7 @@ public class LibraryModel {
 			URL url = new URL(urlString);
 			new UrlFetcher(_handler).execute(url);
 		} catch (MalformedURLException e) {
-			Log.e(LOG_TAG, e.toString());
+			_logger.e(e);
 		}
 	}
 	
@@ -121,12 +122,12 @@ public class LibraryModel {
 
 		@Override
 		public void onResult(Object result) {
-			Log.i(LOG_TAG, "on articles back");
+			_logger.i("on articles back");
 			String data = (String) result;
 			Object object;
 			
 			if(data == null) {
-				Log.e(LOG_TAG, "return null data");
+				_logger.e("return null data");
 				_updateDoneSignal.dispatch(false);
 				return;
 			}
@@ -155,10 +156,10 @@ public class LibraryModel {
 				}
 				
 			} catch (JSONException e) {
-				Log.e(LOG_TAG, e.toString());
+				_logger.e(e);
 				
 			} catch (SQLException e) {
-				Log.e(LOG_TAG, e.toString());
+				_logger.e(e);
 				
 			}
 		}

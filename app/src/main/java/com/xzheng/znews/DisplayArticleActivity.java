@@ -13,16 +13,14 @@ import org.json.JSONTokener;
 import com.google.common.base.Strings;
 import com.xzheng.znews.model.Article;
 import com.xzheng.znews.util.AssetUtil;
+import com.xzheng.znews.util.Logger;
 import com.xzheng.znews.util.UrlFetcher;
 import com.xzheng.znews.util.UrlFetcherHandler;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
 
 public class DisplayArticleActivity extends BaseActivity {
@@ -31,6 +29,7 @@ public class DisplayArticleActivity extends BaseActivity {
 	AssetUtil _assetUtil;
 	
 	protected final String LOG_TAG = "DisplayArticleActivity";
+    private Logger _logger = new Logger.Builder().tag(LOG_TAG).build();
 	private WebView _webView;
 	static private String _articleHtmlFmt;
 	private Article _article;
@@ -67,7 +66,7 @@ public class DisplayArticleActivity extends BaseActivity {
 
 			@Override
 			public void onResult(Object result) {
-				Log.i(LOG_TAG, "on artile text back");
+				_logger.i("on artile text back");
 				String data = (String) result;
 				Object object;
 				try {
@@ -83,10 +82,9 @@ public class DisplayArticleActivity extends BaseActivity {
 					}
 					
 				} catch (JSONException e) {
-					//e.printStackTrace();
-					Log.e(LOG_TAG, e.toString());
+					_logger.e(e);
 				} catch (SQLException ex) {
-					Log.e(LOG_TAG, "Failed to save article text into db" + ex.toString());
+					_logger.e(ex, "Failed to save article text into db");
 				}
 				
 			}
@@ -106,7 +104,7 @@ public class DisplayArticleActivity extends BaseActivity {
 				URL url = new URL(urlString);
 				new UrlFetcher(handler).execute(url);
 			} catch (MalformedURLException e) {
-				Log.e(LOG_TAG, e.toString());
+				_logger.e(e);
 			}
 		}
 	}

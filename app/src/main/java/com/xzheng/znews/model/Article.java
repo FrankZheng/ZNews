@@ -19,6 +19,7 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import com.xzheng.znews.MainApplication;
 import com.xzheng.znews.persistence.DatabaseHelper;
+import com.xzheng.znews.util.Logger;
 
 @DatabaseTable(tableName = "articles")
 public class Article implements Serializable{
@@ -28,6 +29,7 @@ public class Article implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	private static final String LOG_TAG = "Article";
+    private Logger _logger = new Logger.Builder().tag(LOG_TAG).build();
 	
 	@Inject
 	static DatabaseHelper _databaseHelper;
@@ -82,7 +84,7 @@ public class Article implements Serializable{
 			_pubDate = _dateParser.parse(str);
 		} catch (ParseException e) {
 			//ignore and continue, may need current date later
-			Log.e(LOG_TAG, "Failed to parse the date string " + e.toString());
+			_logger.e(e, "Failed to parse the date string");
 		}
 		 
 	}

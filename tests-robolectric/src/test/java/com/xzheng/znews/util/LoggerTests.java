@@ -10,14 +10,15 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.annotation.Config;
 import org.robolectric.annotation.Implements;
-import org.robolectric.shadows.ShadowLog;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.mock;
 
 /**
  * Created by xzheng on 10/9/14.
+ *
  */
 @RunWith(RobolectricGradleTestRunner.class)
 @Config(shadows = {LoggerTests.MyShadowLog.class})
@@ -40,6 +41,9 @@ public class LoggerTests {
     public void testBuilder() {
         _logger = new Logger.Builder().tag(tag).build();
         assertEquals("wrong tag", _logger._tag, tag);
+
+        _logger = new Logger.Builder().build();
+        assertEquals("wrong tag", _logger._tag, Logger.DEFAULT_TAG);
     }
 
     @Test
@@ -50,7 +54,7 @@ public class LoggerTests {
         _logger.e(mockThrowable, "This is a error, [%d]", 1001);
 
         String expectedLog = String.format("[%s]This is a error, [1001] - I am mock", tag);
-        assertEquals("wrong error log", MyShadowLog.errorLog, expectedLog);
+        assertEquals("Not Expected error log", MyShadowLog.errorLog, expectedLog);
 
     }
 
