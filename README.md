@@ -27,9 +27,11 @@ http://xnewsreader.herokuapp.com/articles?lang=en&limit=50&topic=t&before=2014-1
 
 客户端app架构
 ----------
-存储部分使用 ormlite
-网络部分使用 okhttp
-图片异步加载，缓存使用 Android-Universal-Image-Loader
+* 存储部分使用 ormlite
+* 网络部分使用 okhttp
+* 图片异步加载，缓存使用 Android-Universal-Image-Loader
+* 单元测试使用robolectric和mockito
+* 使用dagger做DI框架
 
 
 将来考虑实现的功能
