@@ -41,6 +41,6 @@ http://xnewsreader.herokuapp.com/articles?lang=en&limit=50&topic=t&before=2014-1
 
 预览
 ----------
-![github](https://raw.githubusercontent.com/FrankZheng/ZNews-iOS/master/screenshots/1.png "github")
+![github](https://raw.githubusercontent.com/FrankZheng/ZNews-iOS/master/screenshots/4.png "github")
 
-![github](https://raw.githubusercontent.com/FrankZheng/ZNews-iOS/master/screenshots/2.png "github")
+![github](https://raw.githubusercontent.com/FrankZheng/ZNews-iOS/master/screenshots/5.png "github")
