@@ -17,7 +17,7 @@ ZNews （最新闻 Android 客户端）
 
 后台服务API
 ----------
-http://xnewsreader.herokuapp.com/articles?lang=en&limit=50&topic=t&before=2014-11-02T00:47:45.000&output=json
+http://xnewsreader.herokuapp.com/articles?lang=en&limit=50&topic=t&before=2015-3-28T00:47:45.000&output=json
 * 现在默认抓取中文的焦点和科技新闻，英文的焦点和科技新闻。
 * lang  [zh | en] 默认为zh 
 * limit 用来指定返回多少条新闻，默认为之前一天内的所有新闻
