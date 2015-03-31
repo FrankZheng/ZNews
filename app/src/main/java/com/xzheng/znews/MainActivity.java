@@ -5,13 +5,13 @@ import javax.inject.Inject;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
-import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -26,15 +26,16 @@ public class MainActivity extends Activity {
 	@Inject
 	LibraryModel libraryModel;
 	
-	private PullToRefreshListView pullRefreshListView = null;
-	private ArticleListAdapter articleListAdapter = null;
+	private SwipeRefreshLayout swipeRefreshLayout;
+    private ListView listView;
+	private ArticleListAdapter articleListAdapter;
 	private boolean libraryLoaded = false;
 	
 	private Signal.Handler<Boolean> libraryUpdateDoneHandler = new Signal.Handler<Boolean>() {
 
 		@Override
 		public void onDispatch(Boolean changed) {
-			pullRefreshListView.onRefreshComplete();
+            swipeRefreshLayout.setRefreshing(false);
 			libraryLoaded = true;
 		}
 	};
@@ -72,11 +73,11 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 		
 		//setup pull refresh list view
-		pullRefreshListView = (PullToRefreshListView)findViewById(R.id.pull_refresh_list);
+        swipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.main_refresh_layout);
 		
-		ListView actualListView = pullRefreshListView.getRefreshableView();
+		listView = (ListView)findViewById(R.id.main_list_view);
 		articleListAdapter = new ArticleListAdapter(this, libraryModel.getArticleList());
-		actualListView.setAdapter(articleListAdapter);
+        listView.setAdapter(articleListAdapter);
 		
 		
 		//build default display image options for UIL
@@ -93,9 +94,9 @@ public class MainActivity extends Activity {
 	    // Add library update done signal
 	    libraryModel.getUpdateDoneSignal().add(libraryUpdateDoneHandler);
 	    // Set a listener to be invoked when the list should be refreshed.
-	 	pullRefreshListView.setOnRefreshListener(onRefreshListener);
+        swipeRefreshLayout.setOnRefreshListener(onRefreshListener);
 	 	// Set a click listener for list view
-	 	actualListView.setOnItemClickListener(onListViewItemClickListener);
+	 	listView.setOnItemClickListener(onListViewItemClickListener);
 		
 	}
 
@@ -111,7 +112,7 @@ public class MainActivity extends Activity {
 		if(!libraryLoaded) {
 			
 			//update library
-			pullRefreshListView.setRefreshing(false);
+			swipeRefreshLayout.setRefreshing(true);
 			libraryModel.update();
 		}
 	}

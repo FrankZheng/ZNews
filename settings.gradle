@@ -1,1 +1,1 @@
-include ':app', ':pulltorefresh', ':tests-robolectric'
+include ':app'
