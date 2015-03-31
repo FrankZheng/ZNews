@@ -30,7 +30,6 @@ http://xnewsreader.herokuapp.com/articles?lang=en&limit=50&topic=t&before=2015-3
 * 存储部分使用 ormlite
 * 网络部分使用 okhttp
 * 图片异步加载，缓存使用 Android-Universal-Image-Loader
-* 单元测试使用robolectric和mockito
 * 使用dagger做DI框架
 
 
