@@ -20,14 +20,20 @@ import com.xzheng.znews.library.model.LibraryModel;
 import com.xzheng.znews.model.Article;
 import com.xzheng.znews.signal.Signal;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+
 public class MainActivity extends Activity {
 	public static final String LOG_TAG = "MainActivity";
 	
 	@Inject
 	LibraryModel libraryModel;
-	
-	private SwipeRefreshLayout swipeRefreshLayout;
-    private ListView listView;
+
+    @InjectView(R.id.main_refresh_layout)
+	SwipeRefreshLayout swipeRefreshLayout;
+    @InjectView(R.id.main_list_view)
+    ListView listView;
+
 	private ArticleListAdapter articleListAdapter;
 	private boolean libraryLoaded = false;
 	
@@ -71,11 +77,9 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		
-		//setup pull refresh list view
-        swipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.main_refresh_layout);
-		
-		listView = (ListView)findViewById(R.id.main_list_view);
+
+        ButterKnife.inject(this);
+
 		articleListAdapter = new ArticleListAdapter(this, libraryModel.getArticleList());
         listView.setAdapter(articleListAdapter);
 		
