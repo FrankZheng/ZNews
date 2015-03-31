@@ -46,6 +46,8 @@ public class DisplayArticleActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		
 		setNeedBackGesture(true);
+
+        getActionBar().setDisplayHomeAsUpEnabled(true);
 		
 		setContentView(R.layout.activity_display_article);
 		_webView = (WebView)this.findViewById(R.id.webview);
@@ -125,7 +127,10 @@ public class DisplayArticleActivity extends BaseActivity {
 		int id = item.getItemId();
 		if (id == R.id.action_settings) {
 			return true;
-		}
+		} else if(id == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
 		return super.onOptionsItemSelected(item);
 	}
 	
