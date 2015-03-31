@@ -47,7 +47,7 @@ public class ArticleListAdapter extends ArrayAdapter<Article>{
 	private static final SimpleDateFormat _dateFormater = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
 
 	public ArticleListAdapter(Context context, List<Article> values) {
-		super(context, R.layout.rowlayout, values);
+		super(context, R.layout.row_article_list, values);
 		
 		MainApplication.getApplication().inject(this);
 		
@@ -63,7 +63,7 @@ public class ArticleListAdapter extends ArrayAdapter<Article>{
 		if(rowView == null) {
 			LayoutInflater inflater = (LayoutInflater) context
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			rowView = inflater.inflate(R.layout.rowlayout, parent, false);
+			rowView = inflater.inflate(R.layout.row_article_list, parent, false);
 		}
 		TextView textView = (TextView) rowView.findViewById(R.id.title);
 		Article article = articles.get(position); 
