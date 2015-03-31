@@ -53,7 +53,7 @@ public class MainActivity extends Activity {
 				long id) {
 			Article item = (Article) listView.getAdapter().getItem(position);
 			//Toast.makeText(this, item.title + " selected", Toast.LENGTH_LONG).show();
-			Intent intent = new Intent(MainActivity.this, DisplayArticleActivity.class);
+			Intent intent = new Intent(MainActivity.this, ArticleDetailActivity.class);
 			intent.putExtra("article", item);
 			startActivity(intent);
 			overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

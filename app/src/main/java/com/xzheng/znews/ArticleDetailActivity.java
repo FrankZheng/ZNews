@@ -23,18 +23,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.WebView;
 
-public class DisplayArticleActivity extends BaseActivity {
+public class ArticleDetailActivity extends BaseActivity {
 	
 	@Inject
 	AssetUtil _assetUtil;
 	
-	protected final String LOG_TAG = "DisplayArticleActivity";
+	protected final String LOG_TAG = "ArticleDetailActivity";
     private Logger _logger = new Logger.Builder().tag(LOG_TAG).build();
 	private WebView _webView;
 	static private String _articleHtmlFmt;
 	private Article _article;
 	
-	public DisplayArticleActivity() {
+	public ArticleDetailActivity() {
 		super();
 		
 		// Bootstrap the Injection process starting from this activity
@@ -49,7 +49,7 @@ public class DisplayArticleActivity extends BaseActivity {
 
         getActionBar().setDisplayHomeAsUpEnabled(true);
 		
-		setContentView(R.layout.activity_display_article);
+		setContentView(R.layout.activity_article_detail);
 		_webView = (WebView)this.findViewById(R.id.webview);
 		//set default font size, does NOT work
 		//use css to style text later

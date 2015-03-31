@@ -16,7 +16,7 @@ import dagger.Provides;
 		},
 		injects = {
 				MainActivity.class,
-				DisplayArticleActivity.class,
+				ArticleDetailActivity.class,
 				ArticleListAdapter.class,
 				LibraryModel.class,
 				Article.class,
