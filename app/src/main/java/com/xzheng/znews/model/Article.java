@@ -87,8 +87,25 @@ public class Article implements Serializable{
 			//ignore and continue, may need current date later
 			_logger.e(e, "Failed to parse the date string");
 		}
-		 
 	}
+
+    public Article(ArticleDescriptor ad) {
+        _id = ad._id;
+        _title = ad.title;
+        _link = ad.link;
+        _publisher = ad.publisher;
+        _thumb = ad.thumb;
+        _brief = ad.brief;
+
+        try {
+            String dateStr = ad.pubDate;
+            String str = dateStr.substring(0, dateStr.length()-1) + "GMT";
+            _pubDate = _dateParser.parse(str);
+        } catch (ParseException e) {
+            //ignore and continue, may need current date later
+            _logger.e(e, "Failed to parse the date string");
+        }
+    }
 	
 	public String getId() {
 		return _id;

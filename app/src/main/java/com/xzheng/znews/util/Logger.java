@@ -2,6 +2,8 @@ package com.xzheng.znews.util;
 
 import android.util.Log;
 
+import com.xzheng.znews.BuildConfig;
+
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -10,8 +12,11 @@ import javax.inject.Singleton;
  * Hello world.
  */
 public class Logger {
-    protected static final String DEFAULT_TAG = "Logger";
-    protected String _tag = DEFAULT_TAG;
+
+    private static final String DEFAULT_TAG = "Logger";
+    private String _tag = DEFAULT_TAG;
+    private boolean _debug = BuildConfig.DEBUG;
+
 
     public static class Builder {
         private String _tag;
@@ -35,31 +40,40 @@ public class Logger {
 
 
     public void e(Throwable throwable, String format, Object... args) {
-        Log.e(_tag, createFormattedString(format, args), throwable);
+        if(_debug) {
+            Log.e(_tag, createFormattedString(format, args), throwable);
+        }
     }
 
     public void e(Throwable throwable) {
-        Log.e(_tag, "Exception:", throwable);
+        if(_debug) {
+            Log.e(_tag, "Exception:", throwable);
+        }
     }
 
     public void e(String format, Object... args) {
-        Log.e(_tag, createFormattedString(format, args));
+        if(_debug) {
+            Log.e(_tag, createFormattedString(format, args));
+        }
     }
 
     public void i(String format, Object... args) {
-        Log.i(_tag, createFormattedString(format, args));
+        if(_debug) {
+            Log.i(_tag, createFormattedString(format, args));
+        }
     }
 
     public void d(String format, Object... args) {
-        Log.d(_tag, createFormattedString(format, args));
+        if(_debug) {
+            Log.d(_tag, createFormattedString(format, args));
+        }
     }
 
     public void v(String format, Object... args) {
-        Log.v(_tag, createFormattedString(format, args));
+        if(_debug) {
+            Log.v(_tag, createFormattedString(format, args));
+        }
     }
-
-
-
 
     protected String createFormattedString(String format, Object... args) {
         String formattedString;
