@@ -30,7 +30,10 @@ The Client App technolgies
 * Android-Universal-Image-Loader
 * dagger
 
-
+Todo list:
+-----------
+* Support multiple topics.
+* Code cleanup and refactoring.
 
 Preview
 ----------
